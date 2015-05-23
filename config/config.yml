@@ -1,0 +1,6 @@
+base: &base
+  port: 3000
+development:
+  <<: *base
+test:
+  <<: *base

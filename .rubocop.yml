@@ -1,0 +1,14 @@
+AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'config/**/*'
+    - 'config.ru'
+
+Style/Tab:
+  Enabled: false
+IndentationWidth:
+  Enabled: false
+TrailingBlankLines:
+  Enabled: false
