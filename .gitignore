@@ -1,3 +1,5 @@
 .bundle/
 .DS_Store
 tmp/**/*
+neo4j*.tar*
+db/

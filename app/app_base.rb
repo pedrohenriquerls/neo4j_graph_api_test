@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'yaml'
+require 'neo4j'
 
 # application.rb
 # Configs loader
@@ -13,6 +14,12 @@ class AppBase < Sinatra::Base
 
 	# Load config.yml into settings.config variable
 	config = YAML.load_file("#{settings.root}/config/config.yml")
+	env = ENV['RACK_ENV'] || 'development'
+
+	set :environment, env
 	set :config, config[settings.environment.to_s]
-	set :environment, ENV['RACK_ENV'] || 'development'
+
+	# db_name = config[env]['db_name']
+	# Neo4j::Config[:storage_path] = "db/#{db_name}"
+	Neo4j::Session.open(:server_db, 'http://localhost:7474/')
 end

@@ -16,5 +16,5 @@ end
 guard :rubocop do
   watch(%r{^models/(.+)\.rb$})          { |m| "app/models/#{m[1]}.rb" }
   watch(%r{^lib/(.+)\.rb$})             { |m| "lib/#{m[1]}.rb" }
-  watch('app.rb')                       { "app/app.rb" }
+  watch(%r{^app/(.+)\.rb$})             { |m| "app/#{m[1]}.rb" }
 end

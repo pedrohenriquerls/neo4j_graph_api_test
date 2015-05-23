@@ -1,5 +1,5 @@
 desc "Start the server."
-task "server" do
+task :server do
   port = "3000"
   host = "0.0.0.0"
 
