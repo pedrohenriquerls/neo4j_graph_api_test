@@ -15,11 +15,11 @@ class Point
   def add_new_route(point, distance)
     Neo4j::Transaction.run do
       create_route_query = "from-[ :route { distance: #{distance} } ]->to"
-      Neo4j::Session.query.match(from: { Point: { name: self.name } })
-                                 .match(to: { Point: { name: point.name } })
-                                 .create_unique(create_route_query).exec
+      Neo4j::Session.query.match(from: { Point: { name: name } })
+                                .match(to: { Point: { name: point.name } })
+                                .create_unique(create_route_query).exec
 
-      self
+      return self
       # self.create_rel(:route, point, distance: distance)
     end
   end

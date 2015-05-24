@@ -38,5 +38,5 @@ describe Point do
 	    	expect(last[:distance]).to eq(20.0)
 	    end
     end
-  end
+	end
 end

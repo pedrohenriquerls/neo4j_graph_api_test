@@ -15,9 +15,9 @@ class LogisticMeshHelper
 	def self.valid?(info)
   	return false unless info.count == 3
   	!info[0].empty? && !info[1].empty? && number?(info[2])
-  end
+	end
 
-  def self.number?(number)
+	def self.number?(number)
     true if Float(number) rescue false
-  end
+	end
 end

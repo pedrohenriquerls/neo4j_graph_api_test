@@ -23,6 +23,6 @@ describe Map do
 		it 'have all points' do
     	map = Map.find_by(name: 'Tudo')
     	expect(map.points.count).to eq(5)
-    end
-  end
+		end
+	end
 end
