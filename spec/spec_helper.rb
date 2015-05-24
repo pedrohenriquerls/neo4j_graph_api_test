@@ -1,6 +1,5 @@
 require 'rack/test'
 require 'rspec'
-require 'database_cleaner'
 
 ENV['RACK_ENV'] = 'test'
 
@@ -21,15 +20,4 @@ end
 RSpec.configure do |config|
 	config.include Rack::Test::Methods
 	config.include RSpecMixin
-
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean_with :truncation
-    DatabaseCleaner.orm = 'neo4j'
-  end
-  
-  config.after(:all) do
-    DatabaseCleaner.start
-    DatabaseCleaner.clean
-  end
 end

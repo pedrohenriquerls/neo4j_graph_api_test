@@ -9,4 +9,19 @@ class Point
     	{ from: info[0], to: info[1], distance: info[2].to_f }
     end
   end
+
+  def self.new_points(logistic_mesh)
+    meshs = translate(logistic_mesh)
+    meshs.map do |mesh|
+      from = Point.find_or_create_by(name: mesh[:from])
+      to = Point.find_or_create_by(name: mesh[:to])
+      from.add_new_route(to, mesh[:distance])
+    end
+  end
+
+  def add_new_route(point, distance)
+    Neo4j::Transaction.run do
+      self.create_rel(:route, point, distance: distance)
+    end
+  end
 end

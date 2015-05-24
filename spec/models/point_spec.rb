@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Point do
-	subject(:logistic_mesh) do
+	def logistic_mesh
 		['A B 10', 'B D 15', 'A C 20', 'C D 30', 'B E 50', 'D E 30']
 	end
 
@@ -23,4 +23,40 @@ describe Point do
 			expect(mesh[:distance]).to eq(30.0)
 		end
 	end
+
+	context '.new_points' do
+    before(:all) do
+      Point.new_points(logistic_mesh)
+    end
+
+    it 'new points' do
+      expect(Point.find_by(name: 'A')).to_not eq(nil)
+      expect(Point.find_by(name: 'B')).to_not eq(nil)
+      expect(Point.find_by(name: 'C')).to_not eq(nil)
+    end
+
+    context 'point A rels' do
+	    subject(:rels) do
+	    	rels = Point.find_by(name: 'A').rels(dir: :outgoing, type: :route)
+	    	rels.sort { |x, y| x.end_node.name <=> y.end_node.name }
+	    end
+
+	    it 'amount' do
+	    	expect(rels.count).to eq(2)
+	    end
+
+	    it 'from one point to another' do
+	    	expect(rels.first.end_node.name).to eq('B')
+	    	expect(rels.last.end_node.name).to eq('C')
+	    end
+
+	    it 'relation has the right distance' do
+	    	first = rels.first
+	    	expect(first[:distance]).to eq(10.0)
+
+	    	last = rels.last
+	    	expect(last[:distance]).to eq(20.0)
+	    end
+    end
+  end
 end

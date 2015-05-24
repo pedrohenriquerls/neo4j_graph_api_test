@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.2.1'
 
 gem 'rake'
 gem 'sinatra'
 gem 'thin'
-gem 'neo4j', '3.0.4'
+gem 'neo4j', '4.1.5'
 
 group :development do
   gem 'guard-rubocop'
@@ -13,7 +13,6 @@ end
 group :test do
 	gem 'rspec'
   gem 'rack-test'
-  gem 'database_cleaner'
 end
 
 group :development, :test do
