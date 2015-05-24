@@ -6,6 +6,16 @@ describe LogisticMeshHelper do
 
 	context '.translate' do
 		let(:translated_mesh) { LogisticMeshHelper.translate test_sample }
+
+		it 'valid mesh' do
+			expect(translated_mesh.empty?).to be(false)
+		end
+
+		it 'invalid mesh' do
+			mesh = LogisticMeshHelper.translate ['a b c', 'a b c', '', nil]
+			expect(mesh.empty?).to be(true)
+		end
+
 		it 'first mesh' do
 			mesh = translated_mesh.first
 
