@@ -3,6 +3,7 @@
 # Methods to translate and validate any logistic mesh
 class LogisticMeshHelper
 	def self.translate(mesh)
+		return [] if mesh.nil?
 		mesh_list = mesh.compact.collect { |info| info.split(/\W+/) }
 		translated_mesh = mesh_list.map do |info|
 			{ from: info[0], to: info[1], distance: info[2].to_f } if valid? info

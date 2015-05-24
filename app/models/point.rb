@@ -18,6 +18,8 @@ class Point
       Neo4j::Session.query.match(from: { Point: { name: self.name } })
                                  .match(to: { Point: { name: point.name } })
                                  .create_unique(create_route_query).exec
+
+      self
       # self.create_rel(:route, point, distance: distance)
     end
   end

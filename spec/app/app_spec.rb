@@ -1,8 +1,38 @@
 require_relative '../spec_helper'
+require_relative '../../app/models/map.rb'
+require_relative '../support/logistic_mesh.rb'
 
-describe 'My Sinatra Application' do
-  it 'should allow accessing the home page' do
-    get '/'
-    expect(last_response).to be_ok
-  end
+describe 'Logistic mesh api' do
+	include LogisticMesh
+
+	context '/new_map' do
+	  it 'invalid map' do
+	    post '/new_map', logistic_mesh: []
+
+	    expect(response['success']).to be(false)
+	    expect(response['message']).to eq('Malha invalida')
+	  end
+
+	  it 'valid map without name' do
+	  	post '/new_map', logistic_mesh: test_sample
+
+	  	expect(response['success']).to be(false)
+	  	expect(response['message']).to eq('Novo mapa precisa ter um nome')
+	  end
+
+	  it 'valid map with name' do
+	  	post('/new_map', logistic_mesh: test_sample, name: 'Tudo')
+
+	  	expect(response['success']).to be(true)
+	  	expect(response['message']).to eq('Malha persistida com sucesso')
+
+	  	expect(Map.find_by(name: 'Tudo')).to_not be_nil
+	  end
+	end
+
+	private
+
+	def response
+		JSON.parse(last_response.body)
+	end
 end
