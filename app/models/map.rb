@@ -5,4 +5,10 @@ class Map
   property :name, type: String, index: :exact
 
   has_many :in, :points
+
+  def add_new_points(points)
+  	self.points = points
+
+    save
+  end
 end

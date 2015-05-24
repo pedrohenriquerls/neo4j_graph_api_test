@@ -1,12 +1,11 @@
 require 'spec_helper'
+require_relative '../support/logistic_mesh.rb'
 
 describe Point do
-	def logistic_mesh
-		['A B 10', 'B D 15', 'A C 20', 'C D 30', 'B E 50', 'D E 30']
-	end
+	include LogisticMesh
 
 	context '.translate' do
-		let(:translated_mesh) { Point.translate logistic_mesh }
+		let(:translated_mesh) { Point.translate test_sample }
 		it 'first mesh' do
 			mesh = translated_mesh.first
 
@@ -26,13 +25,13 @@ describe Point do
 
 	context '.new_points' do
     before(:all) do
-      Point.new_points(logistic_mesh)
+      Point.new_points(test_sample)
     end
 
     it 'new points' do
-      expect(Point.find_by(name: 'A')).to_not eq(nil)
-      expect(Point.find_by(name: 'B')).to_not eq(nil)
-      expect(Point.find_by(name: 'C')).to_not eq(nil)
+      expect(Point.find_by(name: 'A')).to_not be_nil
+      expect(Point.find_by(name: 'B')).to_not be_nil
+      expect(Point.find_by(name: 'C')).to_not be_nil
     end
 
     context 'point A rels' do
