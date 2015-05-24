@@ -8,7 +8,6 @@ class Map
 
   def add_new_points(points)
   	self.points = points
-
-    save
+  	save
   end
 end

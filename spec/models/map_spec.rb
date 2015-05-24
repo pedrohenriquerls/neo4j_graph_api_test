@@ -6,7 +6,7 @@ describe Map do
 	include LogisticMesh
 
 	before(:all) do
-		Point.new_points(test_sample)
+		Point.new_points(translated_test_sample)
 		Map.new(name: 'Tudo').save
 	end
 

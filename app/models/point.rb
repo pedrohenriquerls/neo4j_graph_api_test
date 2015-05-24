@@ -4,16 +4,8 @@ class Point
   include Neo4j::ActiveNode
   property :name, type: String, index: :exact
 
-  def self.translate(mesh)
-    mesh_list = mesh.collect { |info| info.split(/\W+/) }
-    mesh_list.map do |info|
-    	{ from: info[0], to: info[1], distance: info[2].to_f }
-    end
-  end
-
   def self.new_points(logistic_mesh)
-    meshs = translate(logistic_mesh)
-    meshs.map do |mesh|
+    logistic_mesh.map do |mesh|
       from = Point.find_or_create_by(name: mesh[:from])
       to = Point.find_or_create_by(name: mesh[:to])
       from.add_new_route(to, mesh[:distance])
