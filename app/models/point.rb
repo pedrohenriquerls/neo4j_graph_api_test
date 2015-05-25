@@ -16,8 +16,8 @@ class Point
     Neo4j::Transaction.run do
       create_route_query = "from-[ :route { distance: #{distance}, map: '#{map}' } ]->to"
       Neo4j::Session.query.match(from: { Point: { name: name } })
-                                .match(to: { Point: { name: point.name } })
-                                .create_unique(create_route_query).exec
+                          .match(to: { Point: { name: point.name } })
+                          .create_unique(create_route_query).exec
 
       return self
       # self.create_rel(:route, point, distance: distance)
@@ -25,10 +25,11 @@ class Point
   end
 
   def self.shortest_path(from, to, map)
-    Neo4j::Session.query("MATCH (from:Point { name:'#{from}' }), (to:Point { name: '#{to}'}), path = (from)-[:route*]->(to)
-                            WHERE filter(route in relationships(path) WHERE route.map = '#{map}')
-                            RETURN reduce(p = '', n in nodes(path) | p+n.name+' ' ) AS shortest_path,
-                                   reduce(distance = 0, r in relationships(path) | distance+r.distance) AS total_distance
-                            ORDER BY total_distance ASC LIMIT 1")
+    query = "MATCH (from:Point { name:'#{from}' }), (to:Point { name: '#{to}'}), path = (from)-[:route*]->(to)
+             WHERE filter(route in relationships(path) WHERE route.map = '#{map}')
+             RETURN reduce(p = '', n in nodes(path) | p+n.name+' ' ) AS shortest_path,
+                    reduce(distance = 0, r in relationships(path) | distance+r.distance) AS total_distance
+             ORDER BY total_distance ASC LIMIT 1"
+    Neo4j::Session.query(query)
   end
 end

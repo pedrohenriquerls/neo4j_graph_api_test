@@ -46,5 +46,5 @@ describe Point do
     	expect(response[:shortest_path]).to eq('A B D E ')
     	expect(response[:total_distance]).to eq(55.0)
     end
-  end
+	end
 end

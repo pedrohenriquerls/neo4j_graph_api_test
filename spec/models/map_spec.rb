@@ -8,7 +8,7 @@ describe Map do
 	before(:all) do
 		name = 'Tudo'
 		Point.new_points(translated_test_sample, name)
-		Map.new(name: name).save
+		Map.find_or_create_by(name: name)
 	end
 
 	it 'new maps' do

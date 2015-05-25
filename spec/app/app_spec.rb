@@ -30,6 +30,34 @@ describe 'Logistic mesh api' do
 	  end
 	end
 
+	context '/shortest_path' do
+		it 'to A from D' do
+			params = { from: 'A', to: 'D', autonomy: 10, map: 'Tudo', gas_price: 2.50 }
+			get '/shortest_path', params
+
+			expect(response['success']).to be(true)
+			expect(response['path']).to eq('A B D ')
+			expect(response['cost']).to eq(6.25)
+		end
+
+		let(:expected_message) { 'Não é possivel calcular o caminho escolhido' }
+		it 'to C from B' do
+			params = { from: 'C', to: 'B', autonomy: 10, map: 'Tudo', gas_price: 2.50 }
+			get '/shortest_path', params
+
+			expect(response['success']).to be(false)
+			expect(response['message']).to eq(expected_message)
+		end
+
+		it 'try unknown map' do
+			params = { from: 'A', to: 'D', autonomy: 10, map: 'Nada', gas_price: 2.50 }
+			get '/shortest_path', params
+
+			expect(response['success']).to be(false)
+			expect(response['message']).to eq(expected_message)
+		end
+	end
+
 	private
 
 	def response
