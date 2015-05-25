@@ -6,7 +6,7 @@ describe Point do
 
 	context '.new_points' do
     before(:all) do
-      Point.new_points(translated_test_sample)
+      Point.new_points(translated_test_sample, 'Tudo')
     end
 
     it 'new points' do
@@ -39,4 +39,12 @@ describe Point do
 	    end
     end
 	end
+
+	context '.shortest_path' do
+    it 'from a to e' do
+    	response = Point.shortest_path('A', 'E', 'Tudo').first
+    	expect(response[:shortest_path]).to eq('A B D E ')
+    	expect(response[:total_distance]).to eq(55.0)
+    end
+  end
 end

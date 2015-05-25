@@ -5,16 +5,16 @@ require_relative 'app_base.rb'
 class App < AppBase
   post '/new_map' do
   	logistic_mesh = LogisticMeshHelper.translate params[:logistic_mesh]
-  	name = params[:name]
+  	map_name = params[:name]
 
   	return prepare_response 'Malha invalida' if logistic_mesh.empty?
-  	return prepare_response 'Novo mapa precisa ter um nome' if name.nil?
+  	return prepare_response 'Novo mapa precisa ter um nome' if map_name.nil?
 
   	begin
-	  	new_map = Map.new(name: name)
+	  	new_map = Map.new(name: map_name)
 	  	new_map.save
 
-	  	new_points = Point.new_points logistic_mesh
+	  	new_points = Point.new_points logistic_mesh, map_name
 	  	new_map.add_new_points new_points
 
 	  	return prepare_response 'Malha persistida com sucesso', true
